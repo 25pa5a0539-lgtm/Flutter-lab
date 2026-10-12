@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const ResponsivePage(),
+    );
+  }
+}
+
+class ResponsivePage extends StatelessWidget {
+  const ResponsivePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Get screen width using MediaQuery
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // Set columns based on screen width
+    int columns;
+    if (screenWidth < 600) {
+      columns = 1; // Mobile
+    } else if (screenWidth < 900) {
+      columns = 2; // Tablet
+    } else {
+      columns = 3; // Desktop
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Responsive UI"),
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              "Screen width: ${screenWidth.toStringAsFixed(0)} px",
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: columns,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                children: List.generate(6, (index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue[(index + 2) * 100],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Item ${index + 1}",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
