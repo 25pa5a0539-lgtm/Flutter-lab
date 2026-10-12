@@ -1,1 +1,72 @@
+import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ResponsiveUI(),
+    );
+  }
+}
+
+class ResponsiveUI extends StatelessWidget {
+  const ResponsiveUI({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Responsive UI"),
+        backgroundColor: Colors.blue,
+      ),
+      body: Center(
+        child: Container(
+          width: width > 600 ? 500 : width * 0.9,
+          padding: const EdgeInsets.all(20),
+          color: Colors.lightBlue.shade100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.devices,
+                size: 60,
+                color: Colors.blue,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                width < 600
+                    ? "Mobile Screen"
+                    : width < 900
+                        ? "Tablet Screen"
+                        : "Desktop Screen",
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "This UI adjusts to different screen sizes.",
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text("Click Me"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
