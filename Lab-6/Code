@@ -1,0 +1,45 @@
+
+const express = require('express');
+
+const app = express();
+
+// Middleware to handle form data
+app.use(express.urlencoded({ extended: true }));
+
+// Home page
+app.get('/', (req, res) => {
+    res.send(`
+        <h1>ExpressJS Data Handling</h1>
+
+        <form action="/student" method="GET">
+            <label>Enter Name:</label>
+            <input type="text" name="name">
+
+            <label>Enter Age:</label>
+            <input type="number" name="age">
+
+            <button type="submit">Submit</button>
+        </form>
+    `);
+});
+
+// Handle data and build URL
+app.get('/student', (req, res) => {
+
+    const name = req.query.name;
+    const age = req.query.age;
+
+    const url = `/student?name=${encodeURIComponent(name)}&age=${encodeURIComponent(age)}`;
+
+    res.send(`
+        <h1>Student Details</h1>
+        <p>Name: ${name}</p>
+        <p>Age: ${age}</p>
+        <p>Generated URL: ${url}</p>
+    `);
+});
+
+// Start server
+app.listen(3000, () => {
+    console.log('Server running at http://localhost:3000');
+});
